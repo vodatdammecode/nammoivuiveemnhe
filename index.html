@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy New Year 2026</title>
+<style>
+body {
+    margin:0; padding:0; font-family:'Segoe UI', Arial, sans-serif;
+    background:#000; color:white; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; overflow:hidden; position:relative;
+}
+#title {
+    display:flex; gap:5px; justify-content:center; font-weight:bold; position:relative; z-index:10;
+}
+#title span {
+    font-size:4em; opacity:0; color:#0ff;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+    transition: all 0.3s;
+    cursor:pointer;
+}
+#title span:hover {
+    color: hsl(var(--hue), 100%, 70%);
+    text-shadow: 0 0 10px hsl(var(--hue), 100%, 70%), 0 0 20px hsl(var(--hue), 100%, 70%), 0 0 30px hsl(var(--hue), 100%, 70%), 0 0 50px hsl(var(--hue), 100%, 70%);
+}
+.year { display:flex; gap:20px; justify-content:center; position:relative; z-index:10; }
+.year span {
+    font-size:6em; font-weight:bold;
+    background: linear-gradient(45deg,#ff004c,#ff8a00,#fffc00,#00ff85);
+    background-size:400% 400%;
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    text-shadow:0 0 10px #fff;
+    animation: rainbow 4s ease infinite, bounce 1.5s infinite;
+    transition: all 0.3s;
+    cursor:pointer;
+}
+.year span:hover {
+    text-shadow: 0 0 20px #fff, 0 0 40px #ff0, 0 0 60px #ff0, 0 0 80px #ff0;
+}
+@keyframes rainbow{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+button{
+    padding:15px 30px; font-size:1.2em; border:none; border-radius:10px;
+    cursor:pointer; background:linear-gradient(45deg,#ff004c,#ff8a00,#fffc00,#00ff85);
+    color:white; margin:20px 0; z-index:10; position:relative; transition:0.3s;
+}
+button:hover{ transform: scale(1.1); }
+.letter{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0);
+    background:#fff8e1; padding:30px; border-radius:20px; width:80%; max-width:600px;
+    text-align:left; color:#333; font-size:1.2em; z-index:20;
+    box-shadow:0 0 30px rgba(0,0,0,0.5); border:2px solid #f5deb3;
+    transition:0.5s; overflow:hidden; font-family:'Courier New', monospace;
+    background-image: linear-gradient(to bottom, transparent 95%, #ddd 95%);
+    background-size:100% 1.6em;
+}
+.letter.show{ transform:translate(-50%,-50%) scale(1);}
+.letter p {
+    margin:0;
+    padding:0;
+    line-height:1.6em;
+    white-space:pre-wrap;
+}
+.close{ margin-top:20px; padding:10px 20px; border:none; border-radius:10px; background:#ff4c4c; cursor:pointer; z-index:20; }
+.bubble{ position:absolute; bottom:-50px; width:30px; height:30px; border-radius:50%; animation:rise linear infinite; z-index:1; }
+@keyframes rise{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-120vh) scale(0.5);opacity:0;}}
+.snowflake{ position:absolute; top:-10px; color:white; font-size:1em; user-select:none; z-index:1; pointer-events:none; animation:fall linear infinite; }
+@keyframes fall{0%{transform:translateY(0) rotate(0deg); opacity:1;}100%{transform:translateY(100vh) rotate(360deg); opacity:0;}}
+canvas{ position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;}
+</style>
+</head>
+<body>
+<div id="title"></div>
+<div class="year"></div>
+<button id="openLetter">Mở Thư 💌</button>
+<div class="letter" id="letter">
+    <h2>Gửi em 💕</h2>
+    <p id="letterContent"></p>
+    <button class="close" id="closeLetter">Đóng Thư</button>
+</div>
+<audio id="music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+<canvas id="fireworks"></canvas>
+<script>
+const titleText="HAPPY NEW YEAR";
+const yearText="2026";
+const titleContainer=document.getElementById('title');
+const yearContainer=document.querySelector('.year');
+titleText.split('').forEach(c=>{const span=document.createElement('span'); span.textContent=c; titleContainer.appendChild(span);});
+yearText.split('').forEach(c=>{const span=document.createElement('span'); span.textContent=c; yearContainer.appendChild(span);});
+function typeEffect(container,speed=100,neon=false){
+    const spans=container.querySelectorAll('span'); let i=0;
+    function showNext(){
+        if(i<spans.length){
+            spans[i].style.opacity=1;
+            if(neon){spans[i].style.textShadow='0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff';}
+            else{spans[i].style.color=`hsl(${Math.random()*360},100%,70%)`;}
+            spans[i].addEventListener('mouseover',()=>{spans[i].style.setProperty('--hue', Math.random()*360);});
+            i++; setTimeout(showNext,speed);
+        }
+    }
+    showNext();
+}
+typeEffect(titleContainer,150,true);
+setTimeout(()=>typeEffect(yearContainer,200,false),1500);
+const openBtn=document.getElementById('openLetter');
+const closeBtn=document.getElementById('closeLetter');
+const letter=document.getElementById('letter');
+const music=document.getElementById('music');
+const letterContent=document.getElementById('letterContent');
+const messageLines=[
+    "🎉 Chúc mừng Năm Mới 2026! 🎉",
+    "Chúc em một năm mới tràn đầy hạnh phúc, sức khỏe, và thành công rực rỡ.",
+    "Hãy để mỗi ngày trong năm mới là một cơ hội để em tỏa sáng và đạt được những điều tuyệt vời.",
+    "Mong mọi ước mơ, dự định của em đều thành hiện thực, và mọi thử thách đều trở thành cơ hội.",
+    "Hãy luôn giữ nụ cười trên môi, và niềm vui trong tim. ✨",
+    "Chúc em và gia đình thật nhiều may mắn, yêu thương, và những khoảnh khắc đáng nhớ.",
+    "HAPPY NEW YEAR 2026! 🥳",
+    "Mãi yêu em 😘"
+];
+function typeWriter(lines,idx=0,charIdx=0){
+    if(idx>=lines.length) return;
+    if(charIdx<lines[idx].length){
+        letterContent.innerHTML+=lines[idx][charIdx];
+        charIdx++; setTimeout(()=>typeWriter(lines,idx,charIdx),50);
+    } else {
+        letterContent.innerHTML+='<br>'; setTimeout(()=>typeWriter(lines,idx+1,0),300);
+    }
+}
+openBtn.addEventListener('click',()=>{
+    letter.classList.add('show');
+    letterContent.innerHTML='';
+    typeWriter(messageLines);
+    music.play();
+});
+closeBtn.addEventListener('click',()=>{
+    letter.classList.remove('show');
+    music.pause();
+    music.currentTime=0;
+});
+const colors=['#ff4c4c','#ffed4c','#4cff9f','#4c6fff','#ff4cd1'];
+function createBubble(){
+    const bubble=document.createElement('div'); bubble.classList.add('bubble');
+    const size=Math.random()*40+10; bubble.style.width=`${size}px`; bubble.style.height=`${size}px`;
+    bubble.style.left=`${Math.random()*100}vw`; bubble.style.background=colors[Math.floor(Math.random()*colors.length)];
+    bubble.style.animationDuration=`${Math.random()*5+5}s`; document.body.appendChild(bubble);
+    setTimeout(()=>bubble.remove(),(Math.random()*5000+5000));
+}
+setInterval(createBubble,300);
+function createSnow(){
+    const snow=document.createElement('div'); snow.classList.add('snowflake');
+    snow.style.left=Math.random()*100+'vw'; snow.style.fontSize=Math.random()*20+10+'px';
+    snow.textContent='❄'; snow.style.animationDuration=Math.random()*5+5+'s';
+    document.body.appendChild(snow); setTimeout(()=>snow.remove(),10000);
+}
+setInterval(createSnow,200);
+const canvas=document.getElementById('fireworks'); const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+let fireworks=[],particles=[];
+function random(min,max){return Math.random()*(max-min)+min;}
+class Firework{constructor(x,y){this.x=x;this.y=canvas.height;this.targetY=y;this.color=`hsl(${Math.random()*360},100%,50%)`;this.done=false;}
+update(){this.y-=5;if(this.y<=this.targetY){this.explode();this.done=true;}}
+explode(){for(let i=0;i<50;i++) particles.push(new Particle(this.x,this.y,this.color));}
+draw(){ctx.fillStyle=this.color;ctx.beginPath();ctx.arc(this.x,this.y,3,0,Math.PI*2);ctx.fill();}}
+class Particle{constructor(x,y,color){this.x=x;this.y=y;this.color=color;this.velX=random(-3,3);this.velY=random(-3,3);this.alpha=1;}
+update(){this.x+=this.velX; this.y+=this.velY; this.alpha-=0.02;}
+draw(){ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.beginPath();ctx.arc(this.x,this.y,2,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;}}
+
+function animate(){
+    ctx.fillStyle='rgba(0,0,0,0.2)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    if(Math.random()<0.05) fireworks.push(new Firework(Math.random()*canvas.width,random(100,canvas.height/2)));
+    for(let i=fireworks.length-1;i>=0;i--){fireworks[i].update();fireworks[i].draw();if(fireworks[i].done) fireworks.splice(i,1);}
+    for(let i=particles.length-1;i>=0;i--){particles[i].update();particles[i].draw();if(particles[i].alpha<=0) particles.splice(i,1);}
+    requestAnimationFrame(animate);
+}
+animate();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+</script>
+</body>
+</html>
+
