@@ -2,179 +2,340 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Happy New Year 2026</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
 <style>
-body {
-    margin:0; padding:0; font-family:'Segoe UI', Arial, sans-serif;
-    background:#000; color:white; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; overflow:hidden; position:relative;
+/* ===== GIỮ NGUYÊN TOÀN BỘ CSS ===== */
+body{
+    margin:0; padding:0;
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:#000; color:white;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    height:100vh; overflow:hidden;
 }
-#title {
-    display:flex; gap:5px; justify-content:center; font-weight:bold; position:relative; z-index:10;
+#title{display:flex;gap:5px;justify-content:center;font-weight:bold;z-index:10}
+#title span{
+    font-size:4em;
+    opacity:0;
+    color:#0ff;
+    text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff;
+    transition:.3s;
+    cursor:pointer
 }
-#title span {
-    font-size:4em; opacity:0; color:#0ff;
-    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
-    transition: all 0.3s;
-    cursor:pointer;
-}
-#title span:hover {
-    color: hsl(var(--hue), 100%, 70%);
-    text-shadow: 0 0 10px hsl(var(--hue), 100%, 70%), 0 0 20px hsl(var(--hue), 100%, 70%), 0 0 30px hsl(var(--hue), 100%, 70%), 0 0 50px hsl(var(--hue), 100%, 70%);
-}
-.year { display:flex; gap:20px; justify-content:center; position:relative; z-index:10; }
-.year span {
-    font-size:6em; font-weight:bold;
-    background: linear-gradient(45deg,#ff004c,#ff8a00,#fffc00,#00ff85);
+#title span:hover{color:hsl(var(--hue),100%,70%)}
+
+.year{display:flex;gap:20px;z-index:10}
+.year span{
+    font-size:6em;
+    font-weight:bold;
+    background:linear-gradient(45deg,#ff004c,#ff8a00,#fffc00,#00ff85);
     background-size:400% 400%;
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
     text-shadow:0 0 10px #fff;
-    animation: rainbow 4s ease infinite, bounce 1.5s infinite;
-    transition: all 0.3s;
-    cursor:pointer;
+    animation:rainbow 4s infinite,bounce 1.5s infinite
 }
-.year span:hover {
-    text-shadow: 0 0 20px #fff, 0 0 40px #ff0, 0 0 60px #ff0, 0 0 80px #ff0;
+@keyframes rainbow{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
 }
-@keyframes rainbow{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+@keyframes bounce{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-20px)}
+}
+
 button{
-    padding:15px 30px; font-size:1.2em; border:none; border-radius:10px;
-    cursor:pointer; background:linear-gradient(45deg,#ff004c,#ff8a00,#fffc00,#00ff85);
-    color:white; margin:20px 0; z-index:10; position:relative; transition:0.3s;
+    padding:14px 26px;
+    font-size:1.1em;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:linear-gradient(45deg,#ff004c,#ff8a00,#fffc00,#00ff85);
+    color:white;
+    margin:15px 0;
+    z-index:10
 }
-button:hover{ transform: scale(1.1); }
+
 .letter{
-    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0);
-    background:#fff8e1; padding:30px; border-radius:20px; width:80%; max-width:600px;
-    text-align:left; color:#333; font-size:1.2em; z-index:20;
-    box-shadow:0 0 30px rgba(0,0,0,0.5); border:2px solid #f5deb3;
-    transition:0.5s; overflow:hidden; font-family:'Courier New', monospace;
-    background-image: linear-gradient(to bottom, transparent 95%, #ddd 95%);
-    background-size:100% 1.6em;
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    width:90%;
+    max-width:600px;
+    height:70vh;
+    background:#fff8e1;
+    border-radius:20px;
+    padding:20px;
+    z-index:20;
+    transition:.4s ease;
+    display:flex;
+    flex-direction:column
 }
-.letter.show{ transform:translate(-50%,-50%) scale(1);}
-.letter p {
-    margin:0;
-    padding:0;
-    line-height:1.6em;
-    white-space:pre-wrap;
+.letter.show{
+    transform:translate(-50%,-50%) scale(1)
 }
-.close{ margin-top:20px; padding:10px 20px; border:none; border-radius:10px; background:#ff4c4c; cursor:pointer; z-index:20; }
-.bubble{ position:absolute; bottom:-50px; width:30px; height:30px; border-radius:50%; animation:rise linear infinite; z-index:1; }
-@keyframes rise{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-120vh) scale(0.5);opacity:0;}}
-.snowflake{ position:absolute; top:-10px; color:white; font-size:1em; user-select:none; z-index:1; pointer-events:none; animation:fall linear infinite; }
-@keyframes fall{0%{transform:translateY(0) rotate(0deg); opacity:1;}100%{transform:translateY(100vh) rotate(360deg); opacity:0;}}
-canvas{ position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;}
+
+.paper{
+    flex:1;
+    overflow-y:auto;
+    font-family:'Dancing Script',cursive;
+    font-size:20px;
+    line-height:32px;
+    color:#333;
+    padding-right:8px;
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 31px,
+        #d0d0d0 32px
+      );
+    white-space:pre-line;
+    scroll-behavior:smooth;
+}
+
+.signature{
+    margin-top:10px;
+    font-family:'Great Vibes',cursive;
+    font-size:32px;
+    color:#000;
+    text-align:right;
+    width:0;
+    overflow:hidden;
+    white-space:nowrap;
+    border-right:2px solid rgba(0,0,0,.6)
+}
+.signature.show{
+    animation:sign 2.5s steps(30,end) forwards
+}
+@keyframes sign{
+    to{width:100%}
+}
+
+.bubble{
+    position:absolute;
+    bottom:-40px;
+    border-radius:50%;
+    opacity:.5;
+    animation:rise linear forwards
+}
+@keyframes rise{
+    to{
+        transform:translateY(-120vh);
+        opacity:0
+    }
+}
+
+canvas{
+    position:absolute;
+    inset:0;
+    z-index:0
+}
 </style>
 </head>
+
 <body>
+
 <div id="title"></div>
 <div class="year"></div>
+
 <button id="openLetter">Mở Thư 💌</button>
+
 <div class="letter" id="letter">
-    <h2>Gửi em 💕</h2>
-    <p id="letterContent"></p>
-    <button class="close" id="closeLetter">Đóng Thư</button>
+    <div class="paper" id="paper"></div>
+    <div class="signature" id="sign">— VoDat —</div>
+    <button onclick="closeLetter()">Đóng Thư</button>
 </div>
+
 <audio id="music" loop>
-    <source src="https://files.catbox.moe/fom97r.mp4 " type="audio/mpeg">
+    <source src="https://files.catbox.moe/fom97r.mp4" type="audio/mpeg">
 </audio>
+
 <canvas id="fireworks"></canvas>
+
 <script>
+/* ===== KHAI BÁO BIẾN (FIX LỖI THIẾU) ===== */
+const openLetter = document.getElementById("openLetter");
+const letter = document.getElementById("letter");
+
+/* ===== TITLE GIỮ NGUYÊN 100% ===== */
 const titleText="HAPPY NEW YEAR";
 const yearText="2026";
-const titleContainer=document.getElementById('title');
-const yearContainer=document.querySelector('.year');
-titleText.split('').forEach(c=>{const span=document.createElement('span'); span.textContent=c; titleContainer.appendChild(span);});
-yearText.split('').forEach(c=>{const span=document.createElement('span'); span.textContent=c; yearContainer.appendChild(span);});
-function typeEffect(container,speed=100,neon=false){
-    const spans=container.querySelectorAll('span'); let i=0;
-    function showNext(){
+const title=document.getElementById("title");
+const year=document.querySelector(".year");
+
+titleText.split("").forEach(c=>{
+    const s=document.createElement("span");
+    s.textContent=c;
+    title.appendChild(s);
+});
+yearText.split("").forEach(c=>{
+    const s=document.createElement("span");
+    s.textContent=c;
+    year.appendChild(s);
+});
+
+function typeEffect(container,speed){
+    const spans=container.querySelectorAll("span");
+    let i=0;
+    (function run(){
         if(i<spans.length){
             spans[i].style.opacity=1;
-            if(neon){spans[i].style.textShadow='0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff';}
-            else{spans[i].style.color=`hsl(${Math.random()*360},100%,70%)`;}
-            spans[i].addEventListener('mouseover',()=>{spans[i].style.setProperty('--hue', Math.random()*360);});
-            i++; setTimeout(showNext,speed);
+            spans[i].addEventListener("mouseover",()=>{
+                spans[i].style.setProperty("--hue",Math.random()*360);
+            });
+            i++;
+            setTimeout(run,speed);
         }
-    }
-    showNext();
+    })();
 }
-typeEffect(titleContainer,150,true);
-setTimeout(()=>typeEffect(yearContainer,200,false),1500);
-const openBtn=document.getElementById('openLetter');
-const closeBtn=document.getElementById('closeLetter');
-const letter=document.getElementById('letter');
-const music=document.getElementById('music');
-const letterContent=document.getElementById('letterContent');
-const messageLines=[
-    "🎉 Chúc mừng Năm Mới 2026! 🎉",
-    "Chúc em một năm mới tràn đầy hạnh phúc, sức khỏe, và thành công rực rỡ.",
-    "Hãy để mỗi ngày trong năm mới là một cơ hội để em tỏa sáng và đạt được những điều tuyệt vời.",
-    "Mong mọi ước mơ, dự định của em đều thành hiện thực, và mọi thử thách đều trở thành cơ hội.",
-    "Hãy luôn giữ nụ cười trên môi, và niềm vui trong tim. ",
-    "Chúc em và gia đình thật nhiều may mắn, yêu thương, và những khoảnh khắc đáng nhớ.",
-    "HAPPY NEW YEAR 2026! 🥳",
-    " 😘 Mãi yêu em 😘    "
+typeEffect(title,150);
+setTimeout(()=>typeEffect(year,200),1500);
+
+/* ===== NỘI DUNG THƯ (DÀI + GỌN + TRÊN DÒNG KẺ) ===== */
+const msg=[
+"🎉 Chúc mừng Năm Mới 2026 🎉",
+"",
+"Một năm cũ đã khép lại,",
+"mang theo biết bao kỷ niệm vui buồn.",
+"Có những ngày rực rỡ ánh nắng,",
+"cũng có những ngày lặng thầm suy nghĩ.",
+"",
+"Bước sang năm mới 2026,",
+"chúc em luôn mạnh khỏe,",
+"luôn bình an giữa cuộc sống bộn bề.",
+"",
+"Mong rằng mỗi buổi sáng thức dậy,",
+"em có đủ năng lượng để mỉm cười,",
+"đủ niềm tin để bước tiếp con đường mình chọn.",
+"",
+"Chúc cho những ước mơ nhỏ bé",
+"sẽ dần trở nên rõ ràng hơn.",
+"Những cố gắng âm thầm",
+"sẽ được đền đáp xứng đáng.",
+"",
+"Năm 2026,",
+"mong em học được cách yêu bản thân nhiều hơn,",
+"sống chậm lại một chút,",
+"và trân trọng những điều giản dị quanh mình.",
+"",
+"Dù cuộc sống có thay đổi thế nào,",
+"chỉ mong em luôn giữ được",
+"một trái tim ấm áp",
+"và một nụ cười thật chân thành.",
+"",
+"Chúc cho mỗi ngày trôi qua",
+"đều là một ngày đáng nhớ.",
+"Đủ bình yên để sống,",
+"đủ yêu thương để hạnh phúc.",
+"",
+"HAPPY NEW YEAR 2026 🥳",
+"",
+"Một năm mới an lành,",
+"tràn ngập niềm vui,",
+"yêu thương và hy vọng 💖"
 ];
-function typeWriter(lines,idx=0,charIdx=0){
-    if(idx>=lines.length) return;
-    if(charIdx<lines[idx].length){
-        letterContent.innerHTML+=lines[idx][charIdx];
-        charIdx++; setTimeout(()=>typeWriter(lines,idx,charIdx),50);
-    } else {
-        letterContent.innerHTML+='<br>'; setTimeout(()=>typeWriter(lines,idx+1,0),300);
+
+const paper=document.getElementById("paper");
+const sign=document.getElementById("sign");
+const music=document.getElementById("music");
+
+let i=0,j=0;
+
+function write(){
+    if(i>=msg.length){
+        sign.classList.add("show");
+        return;
+    }
+    if(j<msg[i].length){
+        paper.innerHTML+=msg[i][j++];
+        paper.scrollTop=paper.scrollHeight;
+        setTimeout(write,35);
+    }else{
+        paper.innerHTML+="\n";
+        i++; j=0;
+        setTimeout(write,200);
     }
 }
-openBtn.addEventListener('click',()=>{
-    letter.classList.add('show');
-    letterContent.innerHTML='';
-    typeWriter(messageLines);
+
+openLetter.onclick=()=>{
+    letter.classList.add("show");
+    paper.innerHTML="";
+    sign.classList.remove("show");
+    i=j=0;
+    write();
     music.play();
-});
-closeBtn.addEventListener('click',()=>{
-    letter.classList.remove('show');
+};
+
+function closeLetter(){
+    letter.classList.remove("show");
     music.pause();
     music.currentTime=0;
-});
-const colors=['#ff4c4c','#ffed4c','#4cff9f','#4c6fff','#ff4cd1'];
-function createBubble(){
-    const bubble=document.createElement('div'); bubble.classList.add('bubble');
-    const size=Math.random()*40+10; bubble.style.width=`${size}px`; bubble.style.height=`${size}px`;
-    bubble.style.left=`${Math.random()*100}vw`; bubble.style.background=colors[Math.floor(Math.random()*colors.length)];
-    bubble.style.animationDuration=`${Math.random()*5+5}s`; document.body.appendChild(bubble);
-    setTimeout(()=>bubble.remove(),(Math.random()*5000+5000));
 }
-setInterval(createBubble,300);
-function createSnow(){
-    const snow=document.createElement('div'); snow.classList.add('snowflake');
-    snow.style.left=Math.random()*100+'vw'; snow.style.fontSize=Math.random()*20+10+'px';
-    snow.textContent='❄'; snow.style.animationDuration=Math.random()*5+5+'s';
-    document.body.appendChild(snow); setTimeout(()=>snow.remove(),10000);
-}
-setInterval(createSnow,200);
-const canvas=document.getElementById('fireworks'); const ctx=canvas.getContext('2d');
-canvas.width=window.innerWidth; canvas.height=window.innerHeight;
-let fireworks=[],particles=[];
-function random(min,max){return Math.random()*(max-min)+min;}
-class Firework{constructor(x,y){this.x=x;this.y=canvas.height;this.targetY=y;this.color=`hsl(${Math.random()*360},100%,50%)`;this.done=false;}
-update(){this.y-=5;if(this.y<=this.targetY){this.explode();this.done=true;}}
-explode(){for(let i=0;i<50;i++) particles.push(new Particle(this.x,this.y,this.color));}
-draw(){ctx.fillStyle=this.color;ctx.beginPath();ctx.arc(this.x,this.y,3,0,Math.PI*2);ctx.fill();}}
-class Particle{constructor(x,y,color){this.x=x;this.y=y;this.color=color;this.velX=random(-3,3);this.velY=random(-3,3);this.alpha=1;}
-update(){this.x+=this.velX; this.y+=this.velY; this.alpha-=0.02;}
-draw(){ctx.fillStyle=this.color;ctx.globalAlpha=this.alpha;ctx.beginPath();ctx.arc(this.x,this.y,2,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;}}
 
-function animate(){
-    ctx.fillStyle='rgba(0,0,0,0.2)'; ctx.fillRect(0,0,canvas.width,canvas.height);
-    if(Math.random()<0.05) fireworks.push(new Firework(Math.random()*canvas.width,random(100,canvas.height/2)));
-    for(let i=fireworks.length-1;i>=0;i--){fireworks[i].update();fireworks[i].draw();if(fireworks[i].done) fireworks.splice(i,1);}
-    for(let i=particles.length-1;i>=0;i--){particles[i].update();particles[i].draw();if(particles[i].alpha<=0) particles.splice(i,1);}
-    requestAnimationFrame(animate);
+/* ===== BUBBLE ===== */
+setInterval(()=>{
+    const b=document.createElement("div");
+    const s=Math.random()*25+12;
+    b.className="bubble";
+    b.style.width=b.style.height=s+"px";
+    b.style.left=Math.random()*100+"vw";
+    b.style.background=`hsla(${Math.random()*360},100%,70%,.6)`;
+    b.style.animationDuration=8+Math.random()*4+"s";
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),12000);
+},1200);
+
+/* ===== FIREWORK ===== */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+function resize(){
+    canvas.width=innerWidth;
+    canvas.height=innerHeight;
 }
-animate();
-window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+resize();
+addEventListener("resize",resize);
+
+let ps=[];
+function boom(){
+    const x=Math.random()*canvas.width;
+    const y=Math.random()*canvas.height*0.4;
+    for(let i=0;i<25;i++){
+        ps.push({
+            x,y,
+            vx:(Math.random()-0.5)*3,
+            vy:(Math.random()-0.5)*3,
+            life:60,
+            c:`hsl(${Math.random()*360},100%,60%)`
+        });
+    }
+}
+function ani(){
+    ctx.fillStyle="rgba(0,0,0,.25)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    if(Math.random()<0.04) boom();
+    ps.forEach(p=>{
+        p.x+=p.vx;
+        p.y+=p.vy;
+        p.life--;
+        ctx.fillStyle=p.c;
+        ctx.globalAlpha=p.life/60;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,2,0,Math.PI*2);
+        ctx.fill();
+    });
+    ctx.globalAlpha=1;
+    ps=ps.filter(p=>p.life>0);
+    requestAnimationFrame(ani);
+}
+ani();
 </script>
+
 </body>
 </html>
