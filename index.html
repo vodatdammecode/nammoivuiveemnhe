@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-/* ===== GIỮ NGUYÊN TOÀN BỘ CSS ===== */
 body{
     margin:0; padding:0;
     font-family:'Segoe UI', Arial, sans-serif;
@@ -77,9 +76,7 @@ button{
     display:flex;
     flex-direction:column
 }
-.letter.show{
-    transform:translate(-50%,-50%) scale(1)
-}
+.letter.show{transform:translate(-50%,-50%) scale(1)}
 
 .paper{
     flex:1;
@@ -89,15 +86,13 @@ button{
     line-height:32px;
     color:#333;
     padding-right:8px;
-    background-image:
-      repeating-linear-gradient(
+    background-image:repeating-linear-gradient(
         to bottom,
         transparent,
         transparent 31px,
         #d0d0d0 32px
-      );
+    );
     white-space:pre-line;
-    scroll-behavior:smooth;
 }
 
 .signature{
@@ -111,12 +106,8 @@ button{
     white-space:nowrap;
     border-right:2px solid rgba(0,0,0,.6)
 }
-.signature.show{
-    animation:sign 2.5s steps(30,end) forwards
-}
-@keyframes sign{
-    to{width:100%}
-}
+.signature.show{animation:sign 2.5s steps(30,end) forwards}
+@keyframes sign{to{width:100%}}
 
 .bubble{
     position:absolute;
@@ -126,16 +117,19 @@ button{
     animation:rise linear forwards
 }
 @keyframes rise{
-    to{
-        transform:translateY(-120vh);
-        opacity:0
-    }
+    to{transform:translateY(-120vh);opacity:0}
 }
 
-canvas{
-    position:absolute;
-    inset:0;
-    z-index:0
+canvas{position:absolute;inset:0;z-index:0}
+
+/* ===== CHỈ FIX SIZE TITLE & YEAR ===== */
+@media(max-width:768px){
+    #title span{font-size:2.8em}
+    .year span{font-size:4.5em}
+}
+@media(max-width:480px){
+    #title span{font-size:2.2em}
+    .year span{font-size:3.5em}
 }
 </style>
 </head>
@@ -160,11 +154,9 @@ canvas{
 <canvas id="fireworks"></canvas>
 
 <script>
-/* ===== KHAI BÁO BIẾN (FIX LỖI THIẾU) ===== */
-const openLetter = document.getElementById("openLetter");
-const letter = document.getElementById("letter");
+const openLetter=document.getElementById("openLetter");
+const letter=document.getElementById("letter");
 
-/* ===== TITLE GIỮ NGUYÊN 100% ===== */
 const titleText="HAPPY NEW YEAR";
 const yearText="2026";
 const title=document.getElementById("title");
@@ -190,15 +182,13 @@ function typeEffect(container,speed){
             spans[i].addEventListener("mouseover",()=>{
                 spans[i].style.setProperty("--hue",Math.random()*360);
             });
-            i++;
-            setTimeout(run,speed);
+            i++; setTimeout(run,speed);
         }
     })();
 }
 typeEffect(title,150);
 setTimeout(()=>typeEffect(year,200),1500);
 
-/* ===== NỘI DUNG THƯ (DÀI + GỌN + TRÊN DÒNG KẺ) ===== */
 const msg=[
 "🎉 Chúc mừng Năm Mới 2026 🎉",
 "",
@@ -230,11 +220,6 @@ const msg=[
 "một trái tim ấm áp",
 "và một nụ cười thật chân thành.",
 "",
-"Chúc cho mỗi ngày trôi qua",
-"đều là một ngày đáng nhớ.",
-"Đủ bình yên để sống,",
-"đủ yêu thương để hạnh phúc.",
-"",
 "HAPPY NEW YEAR 2026 🥳",
 "",
 "Một năm mới an lành,",
@@ -245,21 +230,17 @@ const msg=[
 const paper=document.getElementById("paper");
 const sign=document.getElementById("sign");
 const music=document.getElementById("music");
-
 let i=0,j=0;
 
 function write(){
-    if(i>=msg.length){
-        sign.classList.add("show");
-        return;
-    }
+    if(i>=msg.length){sign.classList.add("show");return;}
     if(j<msg[i].length){
         paper.innerHTML+=msg[i][j++];
         paper.scrollTop=paper.scrollHeight;
         setTimeout(write,35);
     }else{
         paper.innerHTML+="\n";
-        i++; j=0;
+        i++;j=0;
         setTimeout(write,200);
     }
 }
@@ -275,11 +256,10 @@ openLetter.onclick=()=>{
 
 function closeLetter(){
     letter.classList.remove("show");
-    music.pause();
-    music.currentTime=0;
+    music.pause(); music.currentTime=0;
 }
 
-/* ===== BUBBLE ===== */
+/* bubble */
 setInterval(()=>{
     const b=document.createElement("div");
     const s=Math.random()*25+12;
@@ -292,50 +272,33 @@ setInterval(()=>{
     setTimeout(()=>b.remove(),12000);
 },1200);
 
-/* ===== FIREWORK ===== */
+/* fireworks */
 const canvas=document.getElementById("fireworks");
 const ctx=canvas.getContext("2d");
-function resize(){
-    canvas.width=innerWidth;
-    canvas.height=innerHeight;
-}
-resize();
-addEventListener("resize",resize);
-
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize();addEventListener("resize",resize);
 let ps=[];
 function boom(){
     const x=Math.random()*canvas.width;
     const y=Math.random()*canvas.height*0.4;
     for(let i=0;i<25;i++){
-        ps.push({
-            x,y,
-            vx:(Math.random()-0.5)*3,
-            vy:(Math.random()-0.5)*3,
-            life:60,
-            c:`hsl(${Math.random()*360},100%,60%)`
-        });
+        ps.push({x,y,vx:(Math.random()-0.5)*3,vy:(Math.random()-0.5)*3,life:60,c:`hsl(${Math.random()*360},100%,60%)`});
     }
 }
-function ani(){
+(function ani(){
     ctx.fillStyle="rgba(0,0,0,.25)";
     ctx.fillRect(0,0,canvas.width,canvas.height);
     if(Math.random()<0.04) boom();
     ps.forEach(p=>{
-        p.x+=p.vx;
-        p.y+=p.vy;
-        p.life--;
-        ctx.fillStyle=p.c;
-        ctx.globalAlpha=p.life/60;
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,2,0,Math.PI*2);
-        ctx.fill();
+        p.x+=p.vx;p.y+=p.vy;p.life--;
+        ctx.fillStyle=p.c;ctx.globalAlpha=p.life/60;
+        ctx.beginPath();ctx.arc(p.x,p.y,2,0,Math.PI*2);ctx.fill();
     });
     ctx.globalAlpha=1;
     ps=ps.filter(p=>p.life>0);
     requestAnimationFrame(ani);
-}
-ani();
+})();
 </script>
 
 </body>
-</html>
+      </html>
